@@ -7,6 +7,7 @@ interface User {
   name: string;
   email: string;
   avatar: string | null;
+  preferences: Record<string, any> | null;
 }
 
 interface AuthContextType {

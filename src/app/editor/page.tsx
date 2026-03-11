@@ -10,6 +10,7 @@ import Editor from '../components/Editor';
 import StatusBar from '../components/StatusBar';
 import WordReader from '../components/WordReader';
 import TrashModal from '../components/TrashModal';
+import ReadMode from '../components/ReadMode';
 import Settings from '../components/Settings';
 import { useAuth } from '../context/AuthContext';
 
@@ -36,6 +37,7 @@ export default function EditorPage() {
   const [showSidebar, setShowSidebar] = useState(true);
   const [mounted, setMounted] = useState(false);
   const [showTrash, setShowTrash] = useState(false);
+  const [showReadMode, setShowReadMode] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const editorSpeedRef = useRef(60);
 
@@ -74,9 +76,9 @@ export default function EditorPage() {
 
   if (loading || !user) {
     return (
-      <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#0a0a0f', color: '#d4d4d4' }}>
+      <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg)', color: 'var(--text)' }}>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ width: 40, height: 40, border: '3px solid #333', borderTop: '3px solid #007acc', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 16px' }} />
+          <div style={{ width: 40, height: 40, border: '3px solid var(--border-light)', borderTop: '3px solid var(--accent)', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 16px' }} />
           <span>Loading...</span>
         </div>
       </div>
@@ -162,7 +164,7 @@ export default function EditorPage() {
   };
 
   const handleStartReader = (wpm: number) => {
-    if (activeDoc?.blocks && activeDoc.blocks.length > 0) {
+    if (activeDoc) {
       setReaderWpm(wpm);
       editorSpeedRef.current = wpm;
       setShowReader(true);
@@ -170,9 +172,15 @@ export default function EditorPage() {
   };
 
   const handleWordReaderMode = () => {
-    if (activeDoc?.blocks && activeDoc.blocks.length > 0) {
+    if (activeDoc) {
       setReaderWpm(editorSpeedRef.current);
       setShowReader(true);
+    }
+  };
+
+  const handleReadMode = () => {
+    if (activeDoc) {
+      setShowReadMode(true);
     }
   };
 
@@ -189,6 +197,7 @@ export default function EditorPage() {
         onSave={handleSave}
         onToggleSidebar={handleToggleSidebar}
         onWordReaderMode={handleWordReaderMode}
+        onReadMode={handleReadMode}
         onOpenTrash={handleOpenTrash}
         onLogout={handleLogout}
         userName={user.name}
@@ -242,11 +251,20 @@ export default function EditorPage() {
 
       <StatusBar document={activeDoc} blocks={activeDoc?.blocks || []} isMobile={mobile} />
 
-      {showReader && activeDoc?.blocks && (
+      {showReader && activeDoc && (
         <WordReader
-          blocks={activeDoc.blocks}
+          blocks={activeDoc.blocks || []}
           initialWpm={readerWpm}
           onClose={() => setShowReader(false)}
+          isMobile={mobile}
+        />
+      )}
+
+      {showReadMode && activeDoc && (
+        <ReadMode
+          title={activeDoc.title}
+          blocks={activeDoc.blocks || []}
+          onClose={() => setShowReadMode(false)}
           isMobile={mobile}
         />
       )}

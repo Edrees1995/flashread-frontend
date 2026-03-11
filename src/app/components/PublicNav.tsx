@@ -24,6 +24,7 @@ export default function PublicNav() {
         </span>
       </Link>
       <div style={{ display: 'flex', gap: 8 }}>
+        <Link href="/about" style={navBtn}>About</Link>
         <Link href="/login" style={navBtn}>Log In</Link>
         <Link href="/register" style={navBtnPrimary}>Get Started</Link>
       </div>

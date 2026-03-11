@@ -19,14 +19,14 @@ export default function StatusBar({ document, blocks, isMobile }: StatusBarProps
     <div
       style={{
         height: 22,
-        backgroundColor: '#007acc',
+        backgroundColor: 'var(--statusbar-bg)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '0 12px',
         fontFamily: "'Segoe UI', system-ui, sans-serif",
         fontSize: isMobile ? 11 : 12,
-        color: '#ffffff',
+        color: 'var(--statusbar-fg)',
         flexShrink: 0,
         userSelect: 'none',
         overflow: 'hidden',

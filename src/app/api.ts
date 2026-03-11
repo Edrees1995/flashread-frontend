@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Document, ContentBlock, Folder, User } from './types';
+import { Document, ContentBlock, Folder, User, EditorPreferences } from './types';
 
 const api = axios.create({
   baseURL: 'http://localhost:8000',
@@ -116,5 +116,10 @@ export async function uploadAvatar(file: File): Promise<User> {
 
 export async function removeAvatar(): Promise<User> {
   const res = await api.delete('/auth/avatar');
+  return res.data;
+}
+
+export async function updatePreferences(data: Partial<EditorPreferences>): Promise<User> {
+  const res = await api.put('/auth/preferences', data);
   return res.data;
 }

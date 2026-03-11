@@ -18,12 +18,18 @@ interface Word {
   isFirstInBlock: boolean;
 }
 
+function stripHtml(html: string): string {
+  // Remove HTML tags to get plain text for speed reading
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return doc.body.textContent || '';
+}
+
 function buildWords(blocks: ContentBlock[]): Word[] {
   const sorted = [...blocks].sort((a, b) => a.order_index - b.order_index);
   const words: Word[] = [];
 
   sorted.forEach((block, blockIndex) => {
-    const content = (block.content || '').trim();
+    const content = stripHtml(block.content || '').trim();
     if (!content) return;
     const isHeading = block.type === 'heading';
     const tokens = content.split(/\s+/).filter((w) => w.length > 0);
@@ -111,7 +117,7 @@ export default function WordReader({ blocks, initialWpm, onClose, isMobile }: Wo
         style={{
           position: 'fixed',
           inset: 0,
-          backgroundColor: '#1e1e1e',
+          backgroundColor: 'var(--bg)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -119,7 +125,7 @@ export default function WordReader({ blocks, initialWpm, onClose, isMobile }: Wo
           flexDirection: 'column',
           gap: 16,
           fontFamily: "'Segoe UI', system-ui, sans-serif",
-          color: '#858585',
+          color: 'var(--text-muted)',
           padding: isMobile ? '24px 16px' : 0,
           textAlign: 'center',
         }}
@@ -128,9 +134,9 @@ export default function WordReader({ blocks, initialWpm, onClose, isMobile }: Wo
         <button
           onClick={onClose}
           style={{
-            backgroundColor: '#007acc',
+            backgroundColor: 'var(--accent)',
             border: 'none',
-            color: '#fff',
+            color: 'var(--accent-fg)',
             padding: isMobile ? '12px 24px' : '6px 20px',
             borderRadius: 3,
             cursor: 'pointer',
@@ -149,7 +155,7 @@ export default function WordReader({ blocks, initialWpm, onClose, isMobile }: Wo
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: '#1e1e1e',
+        backgroundColor: 'var(--bg)',
         display: 'flex',
         flexDirection: 'column',
         zIndex: 2000,
@@ -160,8 +166,8 @@ export default function WordReader({ blocks, initialWpm, onClose, isMobile }: Wo
       <div
         style={{
           minHeight: isMobile ? 'auto' : 48,
-          backgroundColor: '#252526',
-          borderBottom: '1px solid #454545',
+          backgroundColor: 'var(--bg-sidebar)',
+          borderBottom: '1px solid var(--border)',
           display: 'flex',
           alignItems: isMobile ? 'stretch' : 'center',
           justifyContent: 'space-between',
@@ -172,17 +178,17 @@ export default function WordReader({ blocks, initialWpm, onClose, isMobile }: Wo
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 8 : 16, justifyContent: isMobile ? 'space-between' : 'flex-start' }}>
-          <span style={{ fontSize: 14, fontWeight: 600, color: '#d4d4d4' }}>
+          <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)' }}>
             FlashRead
           </span>
-          <span style={{ fontSize: 12, color: '#858585' }}>
+          <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
             {currentIndex + 1} / {words.length}
           </span>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 8 : 12, flexWrap: isMobile ? 'wrap' : 'nowrap', justifyContent: isMobile ? 'space-between' : 'flex-end' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 6 : 12, flex: isMobile ? 1 : undefined, minWidth: 0 }}>
-            <span style={{ fontSize: 11, color: '#858585', flexShrink: 0 }}>30</span>
+            <span style={{ fontSize: 11, color: 'var(--text-muted)', flexShrink: 0 }}>30</span>
             <input
               type="range"
               min={30}
@@ -190,10 +196,10 @@ export default function WordReader({ blocks, initialWpm, onClose, isMobile }: Wo
               step={10}
               value={wpm}
               onChange={(e) => setWpm(Number(e.target.value))}
-              style={{ width: isMobile ? '100%' : 120, accentColor: '#007acc', flex: isMobile ? 1 : undefined, minWidth: 0 }}
+              style={{ width: isMobile ? '100%' : 120, accentColor: 'var(--accent)', flex: isMobile ? 1 : undefined, minWidth: 0 }}
             />
-            <span style={{ fontSize: 11, color: '#858585', flexShrink: 0 }}>600</span>
-            <span style={{ fontSize: 12, color: '#d4d4d4', fontWeight: 600, minWidth: isMobile ? 50 : 60, flexShrink: 0, textAlign: 'right' }}>
+            <span style={{ fontSize: 11, color: 'var(--text-muted)', flexShrink: 0 }}>600</span>
+            <span style={{ fontSize: 12, color: 'var(--text)', fontWeight: 600, minWidth: isMobile ? 50 : 60, flexShrink: 0, textAlign: 'right' }}>
               {wpm} WPM
             </span>
           </div>
@@ -202,9 +208,9 @@ export default function WordReader({ blocks, initialWpm, onClose, isMobile }: Wo
             <button
               onClick={handlePause}
               style={{
-                backgroundColor: '#007acc',
+                backgroundColor: 'var(--accent)',
                 border: 'none',
-                color: '#fff',
+                color: 'var(--accent-fg)',
                 padding: isMobile ? '10px 16px' : '5px 16px',
                 borderRadius: 3,
                 cursor: 'pointer',
@@ -218,9 +224,9 @@ export default function WordReader({ blocks, initialWpm, onClose, isMobile }: Wo
             <button
               onClick={handleStop}
               style={{
-                backgroundColor: '#3c3c3c',
-                border: '1px solid #454545',
-                color: '#d4d4d4',
+                backgroundColor: 'var(--bg-hover)',
+                border: '1px solid var(--border)',
+                color: 'var(--text)',
                 padding: isMobile ? '10px 16px' : '5px 16px',
                 borderRadius: 3,
                 cursor: 'pointer',
@@ -235,12 +241,12 @@ export default function WordReader({ blocks, initialWpm, onClose, isMobile }: Wo
       </div>
 
       {/* Progress bar */}
-      <div style={{ height: 3, backgroundColor: '#252526', flexShrink: 0 }}>
+      <div style={{ height: 3, backgroundColor: 'var(--bg-sidebar)', flexShrink: 0 }}>
         <div
           style={{
             width: `${((currentIndex + 1) / words.length) * 100}%`,
             height: '100%',
-            backgroundColor: '#007acc',
+            backgroundColor: 'var(--accent)',
             transition: 'width 0.3s ease',
           }}
         />
@@ -277,8 +283,8 @@ export default function WordReader({ blocks, initialWpm, onClose, isMobile }: Wo
                   lineHeight: word.isHeading ? 1.4 : 1.8,
                   fontFamily: "'Consolas', 'Courier New', monospace",
                   visibility: visible ? 'visible' : 'hidden',
-                  color: isCurrent ? '#ffffff' : '#d4d4d4',
-                  backgroundColor: isCurrent ? '#094771' : 'transparent',
+                  color: isCurrent ? 'var(--text-white)' : 'var(--text)',
+                  backgroundColor: isCurrent ? 'var(--bg-active)' : 'transparent',
                   padding: isCurrent ? '2px 4px' : '0',
                   borderRadius: isCurrent ? 3 : 0,
                   transition: 'color 0.2s ease, background-color 0.2s ease',

@@ -188,11 +188,11 @@ export default function Sidebar({
             display: 'flex',
             alignItems: 'center',
             gap: 5,
-            color: '#d4d4d4',
-            backgroundColor: isDragOver ? '#094771' : 'transparent',
+            color: 'var(--text)',
+            backgroundColor: isDragOver ? 'var(--bg-active)' : 'transparent',
             minHeight: isMobile ? 44 : undefined,
             position: 'relative',
-            outline: isDragOver ? '1px dashed #007acc' : 'none',
+            outline: isDragOver ? '1px dashed var(--accent)' : 'none',
             borderRadius: isDragOver ? 3 : 0,
           }}
         >
@@ -208,17 +208,17 @@ export default function Sidebar({
                 onKeyDown={(e) => { if (e.key === 'Enter') finishRename(); if (e.key === 'Escape') { setEditingFolderId(null); setNameError(null); } }}
                 onClick={(e) => e.stopPropagation()}
                 style={{
-                  width: '100%', backgroundColor: '#1e1e1e',
-                  border: nameError ? '1px solid #f44747' : '1px solid #007acc',
-                  borderRadius: 2, color: '#d4d4d4', fontSize: 13, padding: '1px 4px',
+                  width: '100%', backgroundColor: 'var(--bg)',
+                  border: nameError ? '1px solid var(--error)' : '1px solid var(--accent)',
+                  borderRadius: 2, color: 'var(--text)', fontSize: 13, padding: '1px 4px',
                   outline: 'none', fontFamily: "'Segoe UI', system-ui, sans-serif",
                 }}
               />
               {nameError && (
                 <div style={{
                   position: 'absolute', top: '100%', left: 0, right: 0, marginTop: 2,
-                  backgroundColor: '#5a1d1d', border: '1px solid #f44747', borderRadius: 3,
-                  padding: '4px 8px', fontSize: 11, color: '#f44747', zIndex: 10,
+                  backgroundColor: 'var(--error-bg)', border: '1px solid var(--error)', borderRadius: 3,
+                  padding: '4px 8px', fontSize: 11, color: 'var(--error)', zIndex: 10,
                   whiteSpace: 'nowrap',
                 }}>
                   {nameError}
@@ -243,7 +243,7 @@ export default function Sidebar({
             {children.map((child) => renderFolder(child, depth + 1))}
             {docs.map((doc) => renderDoc(doc, depth + 1))}
             {children.length === 0 && docs.length === 0 && (
-              <div style={{ paddingLeft: isMobile ? 28 + depth * 16 : 24 + depth * 16, fontSize: 12, color: '#555', padding: '2px 8px', fontStyle: 'italic' }}>
+              <div style={{ paddingLeft: isMobile ? 28 + depth * 16 : 24 + depth * 16, fontSize: 12, color: 'var(--text-muted)', padding: '2px 8px', fontStyle: 'italic' }}>
                 Empty
               </div>
             )}
@@ -277,8 +277,8 @@ export default function Sidebar({
           display: 'flex',
           alignItems: 'center',
           gap: 6,
-          backgroundColor: isActive ? '#094771' : 'transparent',
-          color: isActive ? '#ffffff' : '#d4d4d4',
+          backgroundColor: isActive ? 'var(--bg-active)' : 'transparent',
+          color: isActive ? 'var(--text-white)' : 'var(--text)',
           minHeight: isMobile ? 44 : undefined,
           position: 'relative',
           opacity: isDragging ? 0.4 : 1,
@@ -295,17 +295,17 @@ export default function Sidebar({
               onKeyDown={(e) => { if (e.key === 'Enter') finishRenameDoc(); if (e.key === 'Escape') { setEditingDocId(null); setEditingDocName(''); setNameError(null); } }}
               onClick={(e) => e.stopPropagation()}
               style={{
-                width: '100%', backgroundColor: '#1e1e1e',
-                border: nameError ? '1px solid #f44747' : '1px solid #007acc',
-                borderRadius: 2, color: '#d4d4d4', fontSize: 13, padding: '1px 4px',
+                width: '100%', backgroundColor: 'var(--bg)',
+                border: nameError ? '1px solid var(--error)' : '1px solid var(--accent)',
+                borderRadius: 2, color: 'var(--text)', fontSize: 13, padding: '1px 4px',
                 outline: 'none', fontFamily: "'Segoe UI', system-ui, sans-serif",
               }}
             />
             {nameError && (
               <div style={{
                 position: 'absolute', top: '100%', left: 0, right: 0, marginTop: 2,
-                backgroundColor: '#5a1d1d', border: '1px solid #f44747', borderRadius: 3,
-                padding: '4px 8px', fontSize: 11, color: '#f44747', zIndex: 10,
+                backgroundColor: 'var(--error-bg)', border: '1px solid var(--error)', borderRadius: 3,
+                padding: '4px 8px', fontSize: 11, color: 'var(--error)', zIndex: 10,
                 whiteSpace: 'nowrap',
               }}>
                 {nameError}
@@ -328,8 +328,8 @@ export default function Sidebar({
         maxWidth: isMobile ? 320 : 240,
         minWidth: isMobile ? undefined : 240,
         height: isMobile ? '100%' : undefined,
-        backgroundColor: '#252526',
-        borderRight: '1px solid #454545',
+        backgroundColor: 'var(--bg-sidebar)',
+        borderRight: '1px solid var(--border)',
         display: 'flex',
         flexDirection: 'column',
         fontFamily: "'Segoe UI', system-ui, sans-serif",
@@ -337,7 +337,7 @@ export default function Sidebar({
         overflow: 'hidden',
         ...(isMobile ? {
           position: 'fixed' as const, top: 0, right: 0, bottom: 0, zIndex: 1000,
-          boxShadow: '-4px 0 16px rgba(0,0,0,0.5)', borderRight: 'none', borderLeft: '1px solid #454545',
+          boxShadow: '-4px 0 16px var(--shadow)', borderRight: 'none', borderLeft: '1px solid var(--border)',
         } : {}),
       }}
     >
@@ -346,8 +346,8 @@ export default function Sidebar({
         style={{
           padding: isMobile ? '12px 16px' : '8px 12px',
           fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.8px',
-          color: '#858585', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          borderBottom: '1px solid #454545', minHeight: isMobile ? 44 : undefined,
+          color: 'var(--text-muted)', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          borderBottom: '1px solid var(--border)', minHeight: isMobile ? 44 : undefined,
         }}
       >
         <span>Explorer</span>
@@ -369,8 +369,8 @@ export default function Sidebar({
       >
         {dragOverRoot && dragDocId !== null && (
           <div style={{
-            padding: '4px 12px', fontSize: 11, color: '#007acc', fontStyle: 'italic',
-            borderBottom: '1px dashed #007acc',
+            padding: '4px 12px', fontSize: 11, color: 'var(--accent)', fontStyle: 'italic',
+            borderBottom: '1px dashed var(--accent)',
           }}>
             Drop here to move to root
           </div>
@@ -378,7 +378,7 @@ export default function Sidebar({
         {rootFolders.map((f) => renderFolder(f, 0))}
         {rootDocs.map((d) => renderDoc(d, 0))}
         {rootFolders.length === 0 && rootDocs.length === 0 && (
-          <div style={{ padding: '12px 16px', fontSize: isMobile ? 14 : 12, color: '#858585', fontStyle: 'italic' }}>
+          <div style={{ padding: '12px 16px', fontSize: isMobile ? 14 : 12, color: 'var(--text-muted)', fontStyle: 'italic' }}>
             No documents yet
           </div>
         )}
@@ -412,7 +412,7 @@ export default function Sidebar({
       )}
 
       {/* User profile */}
-      <div style={{ borderTop: '1px solid #454545', position: 'relative' }}>
+      <div style={{ borderTop: '1px solid var(--border)', position: 'relative' }}>
         <div
           onClick={() => setShowProfileMenu(!showProfileMenu)}
           style={{
@@ -428,13 +428,13 @@ export default function Sidebar({
             width: isMobile ? 32 : 28,
             height: isMobile ? 32 : 28,
             borderRadius: '50%',
-            backgroundColor: avatarUrl ? 'transparent' : '#007acc',
+            backgroundColor: avatarUrl ? 'transparent' : 'var(--accent)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             fontSize: isMobile ? 14 : 12,
             fontWeight: 700,
-            color: '#fff',
+            color: 'var(--accent-fg)',
             flexShrink: 0,
             overflow: 'hidden',
           }}>
@@ -446,7 +446,7 @@ export default function Sidebar({
           </div>
           <span style={{
             fontSize: isMobile ? 14 : 13,
-            color: '#d4d4d4',
+            color: 'var(--text)',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
@@ -455,7 +455,7 @@ export default function Sidebar({
             {firstName}
           </span>
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ flexShrink: 0, transform: showProfileMenu ? 'rotate(180deg)' : 'none' }}>
-            <path d="M2 4l3 3 3-3" stroke="#858585" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M2 4l3 3 3-3" stroke="var(--text-muted)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
 
@@ -468,18 +468,18 @@ export default function Sidebar({
               left: 8,
               right: 8,
               marginBottom: 4,
-              backgroundColor: '#252526',
-              border: '1px solid #454545',
+              backgroundColor: 'var(--bg-sidebar)',
+              border: '1px solid var(--border)',
               borderRadius: 6,
               padding: '4px 0',
-              boxShadow: '0 -4px 16px rgba(0,0,0,0.4)',
+              boxShadow: '0 -4px 16px var(--shadow)',
               zIndex: 2000,
             }}>
               <div style={{
                 padding: '8px 14px',
                 fontSize: 12,
-                color: '#858585',
-                borderBottom: '1px solid #454545',
+                color: 'var(--text-muted)',
+                borderBottom: '1px solid var(--border)',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
@@ -491,7 +491,7 @@ export default function Sidebar({
                 onClick={() => { setShowProfileMenu(false); onOpenSettings(); }}
                 icon={<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 10a2 2 0 100-4 2 2 0 000 4z" stroke="currentColor" strokeWidth="1.2" /><path d="M13.5 8c0-.3-.2-.6-.4-.8l1-1.7-.9-.9-1.7 1c-.2-.2-.5-.4-.8-.4L10 3.5H9l-.7 1.7c-.3 0-.6.2-.8.4l-1.7-1-.9.9 1 1.7c-.2.2-.4.5-.4.8L3.5 8v1l1.7.7c0 .3.2.6.4.8l-1 1.7.9.9 1.7-1c.2.2.5.4.8.4l.7 1.7H10l.7-1.7c.3 0 .6-.2.8-.4l1.7 1 .9-.9-1-1.7c.2-.2.4-.5.4-.8l1.7-.7V8z" stroke="currentColor" strokeWidth="1.2" /></svg>}
               />
-              <div style={{ height: 1, backgroundColor: '#454545', margin: '2px 0' }} />
+              <div style={{ height: 1, backgroundColor: 'var(--border)', margin: '2px 0' }} />
               <ProfileMenuItem
                 label="Log Out"
                 onClick={() => { setShowProfileMenu(false); onLogout(); }}
@@ -515,7 +515,7 @@ function HeaderBtn({ onClick, title, isMobile, muted, children }: {
     <button
       onClick={onClick} title={title}
       style={{
-        background: 'none', border: 'none', color: muted ? '#858585' : '#d4d4d4',
+        background: 'none', border: 'none', color: muted ? 'var(--text-muted)' : 'var(--text)',
         fontSize: isMobile ? 18 : 16, cursor: 'pointer',
         padding: isMobile ? '8px' : '0 4px', lineHeight: 1,
         minWidth: isMobile ? 44 : undefined, minHeight: isMobile ? 44 : undefined,
@@ -534,7 +534,7 @@ function SidebarAction({ title, onClick, danger, children }: {
     <button
       title={title} onClick={onClick}
       style={{
-        background: 'none', border: 'none', color: '#858585', fontSize: 11,
+        background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: 11,
         cursor: 'pointer', padding: '3px 5px', lineHeight: 1, borderRadius: 3,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         minWidth: 22, minHeight: 22,
@@ -574,24 +574,24 @@ function ContextMenu({ x, y, onClose, items }: {
       ref={ref}
       style={{
         position: 'fixed', left: x, top: y, zIndex: 2000,
-        backgroundColor: '#252526', border: '1px solid #454545', borderRadius: 5,
+        backgroundColor: 'var(--bg-sidebar)', border: '1px solid var(--border)', borderRadius: 5,
         minWidth: 180, padding: '4px 0',
-        boxShadow: '0 4px 16px rgba(0,0,0,0.5)',
+        boxShadow: '0 4px 16px var(--shadow)',
         fontFamily: "'Segoe UI', system-ui, sans-serif",
       }}
     >
       {items.map((item, i) =>
         item.divider ? (
-          <div key={i} style={{ height: 1, backgroundColor: '#454545', margin: '4px 0' }} />
+          <div key={i} style={{ height: 1, backgroundColor: 'var(--border)', margin: '4px 0' }} />
         ) : (
           <div
             key={i}
             onClick={item.onClick}
             style={{
               padding: '6px 16px', fontSize: 13, cursor: 'pointer',
-              color: item.danger ? '#f44747' : '#d4d4d4',
+              color: item.danger ? 'var(--error)' : 'var(--text)',
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#094771'; }}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--bg-active)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
           >
             {item.label}
@@ -623,16 +623,16 @@ function MoveToFolderModal({ folders, currentFolderId, onSelect, onClose }: {
             paddingLeft: 16 + depth * 20,
             display: 'flex', alignItems: 'center', gap: 8,
             cursor: isCurrent ? 'default' : 'pointer',
-            color: isCurrent ? '#858585' : '#d4d4d4',
+            color: isCurrent ? 'var(--text-muted)' : 'var(--text)',
             fontSize: 14,
             backgroundColor: 'transparent',
           }}
-          onMouseEnter={(e) => { if (!isCurrent) e.currentTarget.style.backgroundColor = '#094771'; }}
+          onMouseEnter={(e) => { if (!isCurrent) e.currentTarget.style.backgroundColor = 'var(--bg-active)'; }}
           onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
         >
           <FolderIcon size={16} />
           <span style={{ flex: 1 }}>{folder.name}</span>
-          {isCurrent && <span style={{ fontSize: 11, color: '#858585' }}>(current)</span>}
+          {isCurrent && <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>(current)</span>}
         </div>
         {children.map((c) => renderFolder(c, depth + 1))}
       </div>
@@ -642,7 +642,7 @@ function MoveToFolderModal({ folders, currentFolderId, onSelect, onClose }: {
   return (
     <div
       style={{
-        position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.6)',
+        position: 'fixed', inset: 0, backgroundColor: 'var(--bg-overlay)',
         display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 3000,
         fontFamily: "'Segoe UI', system-ui, sans-serif",
       }}
@@ -651,25 +651,25 @@ function MoveToFolderModal({ folders, currentFolderId, onSelect, onClose }: {
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          backgroundColor: '#252526', border: '1px solid #454545', borderRadius: 8,
+          backgroundColor: 'var(--bg-sidebar)', border: '1px solid var(--border)', borderRadius: 8,
           width: 360, maxHeight: '60vh', display: 'flex', flexDirection: 'column',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.5)', overflow: 'hidden',
+          boxShadow: '0 8px 32px var(--shadow)', overflow: 'hidden',
         }}
       >
         {/* Header */}
         <div style={{
-          padding: '14px 20px', borderBottom: '1px solid #454545',
+          padding: '14px 20px', borderBottom: '1px solid var(--border)',
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         }}>
-          <span style={{ fontSize: 14, fontWeight: 600, color: '#d4d4d4' }}>Move to Folder</span>
+          <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)' }}>Move to Folder</span>
           <button
             onClick={onClose}
             style={{
-              background: 'none', border: 'none', color: '#858585', fontSize: 16,
+              background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: 16,
               cursor: 'pointer', padding: '0 4px',
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = '#d4d4d4'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = '#858585'; }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-muted)'; }}
           >
             ✕
           </button>
@@ -682,20 +682,20 @@ function MoveToFolderModal({ folders, currentFolderId, onSelect, onClose }: {
             style={{
               padding: '8px 16px', display: 'flex', alignItems: 'center', gap: 8,
               cursor: currentFolderId === null ? 'default' : 'pointer',
-              color: currentFolderId === null ? '#858585' : '#d4d4d4', fontSize: 14,
+              color: currentFolderId === null ? 'var(--text-muted)' : 'var(--text)', fontSize: 14,
             }}
-            onMouseEnter={(e) => { if (currentFolderId !== null) e.currentTarget.style.backgroundColor = '#094771'; }}
+            onMouseEnter={(e) => { if (currentFolderId !== null) e.currentTarget.style.backgroundColor = 'var(--bg-active)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
           >
             <span style={{ fontSize: 14 }}>📂</span>
             <span>Root (no folder)</span>
-            {currentFolderId === null && <span style={{ fontSize: 11, color: '#858585' }}>(current)</span>}
+            {currentFolderId === null && <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>(current)</span>}
           </div>
 
-          <div style={{ height: 1, backgroundColor: '#454545', margin: '2px 0' }} />
+          <div style={{ height: 1, backgroundColor: 'var(--border)', margin: '2px 0' }} />
 
           {folders.length === 0 ? (
-            <div style={{ padding: '16px', textAlign: 'center', color: '#858585', fontSize: 13 }}>
+            <div style={{ padding: '16px', textAlign: 'center', color: 'var(--text-muted)', fontSize: 13 }}>
               No folders created yet
             </div>
           ) : (
@@ -720,9 +720,9 @@ function ProfileMenuItem({ label, onClick, danger, icon }: {
         gap: 8,
         fontSize: 13,
         cursor: 'pointer',
-        color: danger ? '#f44747' : '#d4d4d4',
+        color: danger ? 'var(--error)' : 'var(--text)',
       }}
-      onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#094771'; }}
+      onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--bg-active)'; }}
       onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
     >
       {icon}

@@ -28,9 +28,17 @@ export interface Folder {
   documents?: Document[];
 }
 
+export interface EditorPreferences {
+  defaultFont: string;
+  headingSize: number;
+  paragraphSize: number;
+  sentenceSize: number;
+}
+
 export interface User {
   id: number;
   name: string;
   email: string;
   avatar: string | null;
+  preferences: EditorPreferences | null;
 }
